@@ -2,6 +2,9 @@
 
 exec 2>&1
 
-echo "Starting httpbin"
 export REDIS_PORT="{{{ bind.cache.first.cfg.port }}}"
-java -jar {{{ pkg.path }}}/httpbin.jar
+export REDIS_HOST="{{{ bind.cache.first.sys.ip }}}"
+
+echo "Starting httpbin with redis $REDIS_HOST:$REDIS_PORT"
+
+java -jar "{{{ pkg.path }}}/httpbin.jar"

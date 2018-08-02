@@ -1,0 +1,17 @@
+version: '2'
+services:
+  redis:
+    image: core/redis
+    command: --strategy at-once
+    environment:
+      HAB_REDIS: '{"protected-mode": "no" }'
+    ports:
+      - 6379:6379
+      - 9631:9631
+  http-bin:
+    image: afiore/http-bin
+    ports:
+      - 8080:8080
+    depends_on:
+      - redis
+    command: --strategy at-once --peer redis --bind cache:redis.default
